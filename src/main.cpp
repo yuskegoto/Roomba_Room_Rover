@@ -1,10 +1,23 @@
 #include "esp_camera.h"
 #include <WiFi.h>
 
-// #define WIFIAP_ENABLED
-#ifdef WIFIAP_ENABLED
+#ifdef ENABLE_WIFI_AP
 #include <WiFiAP.h>
 #endif
+
+#include "utils/Debug.h"
+#include "Roomba.h"
+#include "Status.h"
+#include "Action.h"
+
+// Project config
+#include "def.h"
+
+Debug debug(&Serial, DEBUG_LEVEL);
+
+Roomba roomba(&Serial2, 0);
+Status status;
+Action action;
 
 //
 // WARNING!!! PSRAM IC required for UXGA resolution and high JPEG quality
@@ -38,24 +51,22 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-#ifdef WIFIAP_ENABLED
-const char *SSID = "espcam";
+#ifdef ENABLE_WIFI_AP
+const char *SSID = "rbcam";
 IPAddress apIP(192, 168, 4, 1);
 #else
 const char *ssid = "LAB3";
 const char *password = "aabbccddeeff";
 #endif
 
-#define RXD2 4
-#define TXD2 13
+#define RXD2 4 //13
+#define TXD2 13 //4
 
 void startCameraServer();
 
 void setup() {
   Serial.begin(115200);
-  Serial.setDebugOutput(true);
-  Serial.println();
-  Serial2.begin(115200, SERIAL_8N1, RXD2, TXD2);
+  // Serial.setDebugOutput(true);
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -82,14 +93,14 @@ void setup() {
   //config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
   config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
   config.fb_location = CAMERA_FB_IN_PSRAM;
-  config.jpeg_quality = 12;
+  config.jpeg_quality = 4;//12;
   config.fb_count = 1;
   
   // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
   //                      for larger pre-allocated frame buffer.
   if(config.pixel_format == PIXFORMAT_JPEG){
     if(psramFound()){
-      config.jpeg_quality = 10;
+      config.jpeg_quality = 4;//10;
       config.fb_count = 2;
       config.grab_mode = CAMERA_GRAB_LATEST;
     } else {
@@ -138,7 +149,7 @@ void setup() {
   s->set_vflip(s, 1);
 #endif
 
-#ifdef WIFIAP_ENABLED
+#ifdef ENABLE_WIFI_AP
   WiFi.disconnect();   // added to start with the wifi off, avoid crashing
   WiFi.mode(WIFI_OFF); // added to start with the wifi off, avoid crashing
   WiFi.mode(WIFI_AP);
@@ -147,6 +158,7 @@ void setup() {
 #else
   WiFi.begin(ssid, password);
   WiFi.setSleep(false);
+  WiFi.setTxPower(WIFI_POWER_19_5dBm);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -158,36 +170,67 @@ void setup() {
 
   startCameraServer();
 
-#ifdef WIFIAP_ENABLED
-  Serial.printf("Camera Ready! Use 'http://%s' to connect", WiFi.softAPIP().toString().c_str());
+#ifdef ENABLE_WIFI_AP
+  Serial.printf("Camera Ready! Use 'http://%s' to connect\n", WiFi.softAPIP().toString().c_str());
 #else
-  Serial.print("Camera Ready! Use 'http://");
-  Serial.print(WiFi.localIP());
-  Serial.println("' to connect");
+  Serial.printf("Camera Ready! Use 'http://%s' to connect\n", WiFi.localIP().toString().c_str());
   #endif
+
+// Init Roomba
+  debug.println(F("Roomba Camera"), DEBUG_GENERAL);
+
+  delay(100);
+  Serial2.begin(115200, SERIAL_8N1, RXD2, TXD2);
+
+
+  uint8_t retryCount = 0;
+  while (!roomba.roboInitSequence())
+  {
+    debug.printf(DEBUG_GENERAL, "Retry sequence:%d\n", retryCount++);
+    delay(10000);
+  }
 }
 
 String inputString = "";
 
-void loop() {
-  static bool stringComplete = false;
-  while (Serial2.available())
-  {
-    // get the new byte:
-    char inChar = (char)Serial2.read();
-    inputString += inChar;
-    if (inChar == '\n')
-    {
-      stringComplete = true;
-    }
-  }
-  if (stringComplete)
-  {
-    Serial.println(inputString);
-    // clear the string:
-    inputString = "";
-    stringComplete = false;
-  }
+bool machineState = false;
+void setMachineState(bool state)
+{
+  machineState = state;
+}
 
-  delay(1000);
+void loop() {
+  // static bool stringComplete = false;
+  // while (Serial2.available())
+  // {
+  //   // get the new byte:
+  //   char inChar = (char)Serial2.read();
+  //   inputString += inChar;
+  //   if (inChar == '\n')
+  //   {
+  //     stringComplete = true;
+  //   }
+  // }
+  // if (stringComplete)
+  // {
+  //   Serial.println(inputString);
+  //   // clear the string:
+  //   inputString = "";
+  //   stringComplete = false;
+  // }
+    SensorData data;
+
+    // Check machine state
+    data = status.read();
+
+    if(action.updated){
+      debug.println("updated", DEBUG_ACTION);
+      roomba.driveDirect(action.motorR, action.motorL);
+
+      roomba.toggleCleaning(action.cleaning);
+      setMachineState(action.cleaning);
+      action.updated = false;
+    }
+
+  delay(UPDATE_RATE_ms);
 }
