@@ -187,7 +187,7 @@ void setup() {
   while (!roomba.roboInitSequence())
   {
     debug.printf(DEBUG_GENERAL, "Retry sequence:%d\n", retryCount++);
-    delay(10000);
+    delay(1000);
   }
 }
 

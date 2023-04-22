@@ -2,11 +2,11 @@ const char *index_ov2640_html = R"=====(
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rommba Camera</title>
+<title>Roomba Camera</title>
 <style>
 body {
 font-family: Arial,Helvetica,sans-serif;
-background: #2d91ee;
+background: #dfdfdf;
 color: #EFEFEF;
 font-size: 16px
 }
@@ -19,7 +19,7 @@ section.main {display: flex}
 display: none;
 flex-wrap: nowrap;
 min-width: 340px;
-background: #3d7ab4;
+background: #3db490;
 padding: 8px;
 border-radius: 4px;
 margin-top: -10px;
@@ -134,7 +134,7 @@ border: 0;
 line-height: 28px;
 cursor: pointer;
 color: #fff;
-background: #2e5880;
+background: #2f896e;
 border-radius: 5px;
 font-size: 16px;
 outline: 0
@@ -152,11 +152,11 @@ cursor: pointer
 }
 
 button:hover {
-background: #0050fd
+background: #2f896e
 }
 
 button:active {
-background: #0050fd
+background: #2f896e
 }
 
 button.disabled {
@@ -168,7 +168,7 @@ input[type=range] {
 -webkit-appearance: none;
 width: 100%;
 height: 22px;
-background: #2e5880;
+background: #2f896e;
 cursor: pointer;
 margin: 0
 }
@@ -191,7 +191,7 @@ border: 1px solid rgba(0,0,30,0);
 height: 22px;
 width: 22px;
 border-radius: 50px;
-background: #0050fd;
+background: #2f896e;
 cursor: pointer;
 -webkit-appearance: none;
 margin-top: -11.5px
@@ -215,7 +215,7 @@ border: 1px solid rgba(0,0,30,0);
 height: 22px;
 width: 22px;
 border-radius: 50px;
-background: #0050fd;
+background: #2f896e;
 cursor: pointer
 }
 
@@ -245,7 +245,7 @@ border: 1px solid rgba(0,0,30,0);
 height: 22px;
 width: 22px;
 border-radius: 50px;
-background: #0050fd;
+background: #2f896e;
 cursor: pointer;
 height: 2px
 }
@@ -292,7 +292,7 @@ top: 3px;
 background-color: #fff
 }
 
-input:checked+.slider {background-color: #0050fd}
+input:checked+.slider {background-color: #2f896e}
 
 input:checked+.slider:before {
 -webkit-transform: translateX(26px);
@@ -316,7 +316,7 @@ min-width: 160px
 position: absolute;
 right: 5px;
 top: 5px;
-background: #3d7ab4;
+background: #2f896e;
 width: 16px;
 height: 16px;
 border-radius: 100px;
