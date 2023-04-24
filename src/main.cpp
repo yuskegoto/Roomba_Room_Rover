@@ -1,3 +1,6 @@
+#include <Arduino.h>
+// #include "battery.h"
+
 #include "esp_camera.h"
 #include <WiFi.h>
 
@@ -65,8 +68,9 @@ const char *password = "aabbccddeeff";
 void startCameraServer();
 
 void setup() {
-  Serial.begin(115200);
-  // Serial.setDebugOutput(true);
+  Serial.begin(MONITOR_BAUD);
+  Serial.setDebugOutput(true);
+  pinMode(2, OUTPUT);
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -176,19 +180,19 @@ void setup() {
   Serial.printf("Camera Ready! Use 'http://%s' to connect\n", WiFi.localIP().toString().c_str());
   #endif
 
-// Init Roomba
-  debug.println(F("Roomba Camera"), DEBUG_GENERAL);
+// // Init Roomba
+//   debug.println(F("Roomba Camera"), DEBUG_GENERAL);
 
-  delay(100);
-  Serial2.begin(115200, SERIAL_8N1, RXD2, TXD2);
+//   delay(100);
+//   Serial2.begin(115200, SERIAL_8N1, RXD2, TXD2);
 
 
-  uint8_t retryCount = 0;
-  while (!roomba.roboInitSequence())
-  {
-    debug.printf(DEBUG_GENERAL, "Retry sequence:%d\n", retryCount++);
-    delay(1000);
-  }
+//   uint8_t retryCount = 0;
+//   while (!roomba.roboInitSequence())
+//   {
+//     debug.printf(DEBUG_GENERAL, "Retry sequence:%d\n", retryCount++);
+//     delay(1000);
+//   }
 }
 
 String inputString = "";
@@ -200,37 +204,19 @@ void setMachineState(bool state)
 }
 
 void loop() {
-  // static bool stringComplete = false;
-  // while (Serial2.available())
-  // {
-  //   // get the new byte:
-  //   char inChar = (char)Serial2.read();
-  //   inputString += inChar;
-  //   if (inChar == '\n')
-  //   {
-  //     stringComplete = true;
+  //   if(action.updated){
+  //     debug.println("updated", DEBUG_ACTION);
+  //     roomba.driveDirect(action.motorR, action.motorL);
+
+  //     roomba.toggleCleaning(action.cleaning);
+  //     setMachineState(action.cleaning);
+  //     action.updated = false;
   //   }
-  // }
-  // if (stringComplete)
-  // {
-  //   Serial.println(inputString);
-  //   // clear the string:
-  //   inputString = "";
-  //   stringComplete = false;
-  // }
-    SensorData data;
+  // delay(UPDATE_RATE_ms);
 
-    // Check machine state
-    data = status.read();
-
-    if(action.updated){
-      debug.println("updated", DEBUG_ACTION);
-      roomba.driveDirect(action.motorR, action.motorL);
-
-      roomba.toggleCleaning(action.cleaning);
-      setMachineState(action.cleaning);
-      action.updated = false;
-    }
-
-  delay(UPDATE_RATE_ms);
+  Serial.printf("Camera Ready! Use 'http://%s' to connect\n", WiFi.localIP().toString().c_str());
+  digitalWrite(2, HIGH);
+  delay(3000);
+  digitalWrite(2, LOW);
+  delay(3000);
 }
