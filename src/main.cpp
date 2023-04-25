@@ -201,17 +201,11 @@ void setup() {
     }
 }
 
-// bool machineState = false;
-// void setMachineState(bool state)
-// {
-//     machineState = state;
-// }s
-
 void loop() {
-    SensorData data;
+    // SensorData data;
 
     // Check machine state
-    data = status.read();
+    // data = status.read();
 
     if (action.updated)
     {
@@ -219,14 +213,14 @@ void loop() {
         roomba.driveDirect(action.motorR, action.motorL);
 
         roomba.toggleCleaning(action.cleaning);
-        // setMachineState(action.cleaning);
         action.updated = false;
     }
     else{
         debug.ledOn();
     }
 
-    if (data.button_pressed)
+    // if (data.button_pressed)
+    if (digitalRead(USER_BTN_PIN) == LOW)
     {
         debug.printf(DEBUG_GENERAL, "Button pressed\n");
         delay(1000);
