@@ -31,3 +31,6 @@
 #define ACCESSPOINT_IP2 168
 #define ACCESSPOINT_IP3 4
 #define ACCESSPOINT_IP4 1
+
+////////////////// Control Settings //////////////////////////
+// #define INVERT_X_ON_BACKWORD

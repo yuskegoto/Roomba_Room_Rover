@@ -5,4 +5,4 @@
 .vscode/ipch
 *_old*
 ESP32 OV2460.html
-*.code-wrokspace
+*.code-workspace
