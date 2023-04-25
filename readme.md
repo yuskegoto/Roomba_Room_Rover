@@ -26,8 +26,8 @@ Run "platformio run" at project root directory.
 - [VX07805-500](https://akizukidenshi.com/catalog/g/gM-15209/)
     - Power supply for the ESP32 module. This needs to be a DCDC, since the Roomba side can only supply up to 200mA and ESP32 can sometimes consumes much larger current.
 
-![Circuit Board Front](https://github.com/yuskegoto/Roomba_Room_Rover/blob/master/Pics/IMG_5609.jpg?raw=true)
-![Circuit Board Rear](https://github.com/yuskegoto/Roomba_Room_Rover/blob/master/Pics/IMG_5608.jpg?raw=true)
+![Circuit Board Front](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/IMG_5609.jpg)
+![Circuit Board Rear](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/IMG_5608.jpg)
 
 ## Project structure
 - oi.h
