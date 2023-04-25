@@ -1,20 +1,16 @@
 #include "utils/Debug.h"
 
 ////////////////////// System /////////////////////////
-#define UPDATE_RATE_ms 100
+#define UPDATE_RATE_ms 50
 
 ////////////////////// Debug Config ///////////////////
 #define MONITOR_BAUD 115200
 #define DEBUG_LEVEL DEBUG_GENERAL | DEBUG_CONTROL | DEBUG_SPIFFS | DEBUG_WIFI
-// #define DEBUG_ONLY_WEB
-// #define ENABLE_DNS
-// #define ENABLE_WIFI_AP
+#define ENABLE_WIFI_AP
 
 ////////////////////// Pin config ///////////////////
-// M5-Roomba module pins
-// #define LED_BUILT_IN 5
-// #define ROOMBA_BRC 26    // Baud Rate Change Pin
-// And Serial2 RX: 16, TX:17 are taken for the unit
+#define LED_BUILT_IN 2
+#define BUTTON_PIN 37
 
 //////////////////////Sensing set up/////////////////////////
 #define WHEELDROP_TIMER 10000
@@ -28,7 +24,7 @@
 #define SPEED_LIMIT 100
 #define DISTANCE_LIMIT 10000
 
-#define VACUUM_ON_THRESHOLD 30
+#define VACUUM_ON_THRESHOLD 50
 
 ////////////////// AP set up //////////////////////////
 #define ACCESSPOINT_IP1 192

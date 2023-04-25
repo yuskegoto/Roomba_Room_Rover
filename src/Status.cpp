@@ -9,12 +9,8 @@ extern Debug debug;
 extern Roomba roomba;
 
 Status::Status() {
-// Status::Status(Roomba *r):roomba(r) {
     // init condition
-    // pinMode(BUTTON_A_PIN, INPUT);
-    // pinMode(BUTTON_B_PIN, INPUT);
-    // pinMode(BUTTON_C_PIN, INPUT);
-
+    pinMode(BUTTON_PIN, INPUT);
 }
 
 /**
@@ -22,19 +18,15 @@ Status::Status() {
  */
 SensorData Status::read(void) {
     SensorData data;
-    // readPins(&data);
+    readPins(&data);
     readRoombaStream(&data);
     return data;
 }
 
-// void Status::readPins(SensorData* data) {
-//   if(digitalRead(BUTTON_A_PIN) == LOW) data->buttonA_pressed = true;
-//   else data->buttonA_pressed = false;
-//   if(digitalRead(BUTTON_B_PIN) == LOW) data->buttonB_pressed = true;
-//   else data->buttonB_pressed = false;
-//   if(digitalRead(BUTTON_C_PIN) == LOW) data->buttonC_pressed = true;
-//   else data->buttonC_pressed = false;
-// }
+void Status::readPins(SensorData* data) {
+  if(digitalRead(BUTTON_PIN) == LOW) data->button_pressed = true;
+  else data->button_pressed = false;
+}
 
 void Status::readRoombaStream(SensorData* data) {
 

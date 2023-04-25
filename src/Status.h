@@ -43,11 +43,10 @@ struct SensorData {
     uint16_t lBumpL, lBumpR, lBumpFL, lBumpFR, lBumpCL, lBumpCR;
     uint8_t batteryLevel, cliff;
 
-    // M5 button A - C status
-    bool buttonA_pressed, buttonB_pressed, buttonC_pressed;
+    bool button_pressed;
 
     SensorData(){
-        bumpR= bumpL= vWall= wheelDropR= wheelDropL= overCurrent= charger= batCritical= batLow= locked= buttonA_pressed= buttonB_pressed= buttonC_pressed = false;
+        bumpR= bumpL= vWall= wheelDropR= wheelDropL= overCurrent= charger= batCritical= batLow= locked= button_pressed = false;
     }
 };
 

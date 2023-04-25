@@ -10,7 +10,7 @@ void Action::forward(){
 
 void Action::back(){
     motorR += -MOTOR_SPEED_STEP;
-    motorL += -MOTOR_SPEED_STEP;       
+    motorL += -MOTOR_SPEED_STEP;
     updated = true;
 }
 

@@ -208,18 +208,27 @@ void Debug::print(char string, uint8_t level) {
     #endif
 }
 
+/**
+ * @brief Turn on debug led
+ * 
+ */
 void Debug::ledOn(){
     #ifdef DEBUG
-    // pinMode(LED_BUILT_IN, OUTPUT);
-    // digitalWrite(LED_BUILT_IN, HIGH);
-    #endif
+        pinMode(LED_BUILT_IN, OUTPUT);
+        digitalWrite(LED_BUILT_IN, HIGH);
+#endif
 }
 
-void Debug::ledOff(){
-    #ifdef DEBUG
-    // pinMode(LED_BUILT_IN, OUTPUT);
-    // digitalWrite(LED_BUILT_IN, LOW);
-    #endif
+/**
+ * @brief Turn off debug led
+ *
+ */
+void Debug::ledOff()
+{
+#ifdef DEBUG
+        pinMode(LED_BUILT_IN, OUTPUT);
+        digitalWrite(LED_BUILT_IN, LOW);
+#endif
 }
 
 // void Debug::print(SensorData *data) {
