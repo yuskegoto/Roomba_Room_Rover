@@ -5,6 +5,10 @@ This is a project to turn your Roomba into WiFi-RC car. Based on my previous pro
 
 [MKZ4Camera](https://github.com/cerevo/MKZ4/tree/master/custom/MKZ4Camera): This is a project to run WiFi RC car MKZ-4 with camera streaming, which I worked on when I was at Cerevo Inc.
 
+![Roomba and device from top](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/top.jpg)
+![Device from front](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/device_front.jpg)
+![Decice rear side](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/device_rear.jpg)
+
 # System
 The camera streaming and communication to the Roomba is done by ESP32 with camera module. Basically This project should run on any ESP32 with camera module, but I have used Timer Camera F from M5 since it has fish eye lens.
 
@@ -26,8 +30,8 @@ Run "platformio run" at project root directory.
 - [VX07805-500](https://akizukidenshi.com/catalog/g/gM-15209/)
     - Power supply for the ESP32 module. This needs to be a DCDC, since the Roomba side can only supply up to 200mA and ESP32 can sometimes consumes much larger current.
 
-![Circuit Board Front](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/IMG_5609.jpg)
-![Circuit Board Rear](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/IMG_5608.jpg)
+![Circuit Board Front](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/circuitboard_front.jpg)
+![Circuit Board Rear](https://raw.githubusercontent.com/yuskegoto/Roomba_Room_Rover/main/Pics/circuitboard_rear.jpg)
 
 ## Project structure
 - oi.h
@@ -51,3 +55,8 @@ No additional library is required.
 [WS Server sample](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/esp_http_server.html#websocket-server)
 
 The original oi.h was referenced from the [Roomba-Butler Belvedere project by wolffan](https://www.instructables.com/Belvedere-A-Butler-Robot/).
+
+# Todo
+[] Clean up app_httpd.cpp and html file.
+[] Detailed documentation for circuit board.
+[] Build instruction?
